@@ -20,6 +20,22 @@ export const ResultsScreen = ({ results, onRestart, onReview }: ResultsScreenPro
     return "Cần ôn tập thêm!";
   };
 
+  const handleRestart = () => {
+    // Save to history
+    const history = localStorage.getItem("quizHistory");
+    const historyData = history ? JSON.parse(history) : [];
+    historyData.push({
+      date: new Date().toLocaleDateString('vi-VN'),
+      quizName: "Quiz",
+      score: results.correctCount,
+      totalQuestions: results.totalQuestions,
+      timeTaken: results.timeTaken
+    });
+    localStorage.setItem("quizHistory", JSON.stringify(historyData));
+    
+    onRestart();
+  };
+
   return (
     <div className="animate-slide-up max-w-4xl mx-auto">
       <Card className="shadow-xl">
@@ -110,10 +126,10 @@ export const ResultsScreen = ({ results, onRestart, onReview }: ResultsScreenPro
           </div>
 
           <div className="flex gap-3 mt-8">
-            <Button onClick={onRestart} variant="outline" className="flex-1">
+            <Button onClick={handleRestart} variant="outline" className="flex-1">
               <RefreshCw className="mr-2 h-4 w-4" /> Làm bài khác
             </Button>
-            <Button onClick={onReview} className="flex-1 bg-gradient-to-r from-primary to-info">
+            <Button onClick={onReview} className="flex-1 bg-gradient-to-r from-primary via-accent to-info">
               <BookOpen className="mr-2 h-4 w-4" /> Quay lại
             </Button>
           </div>

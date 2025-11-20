@@ -40,6 +40,11 @@ const Index = () => {
     setCurrentScreen("quiz");
   };
 
+  const handleStartQuizFromStart = (config: QuizConfig) => {
+    setQuizConfig(config);
+    setCurrentScreen("quiz");
+  };
+
   const handleQuizComplete = (results: QuizResults) => {
     setQuizResults(results);
     setCurrentScreen("results");
@@ -61,7 +66,10 @@ const Index = () => {
         <Header />
         
         {currentScreen === "start" && (
-          <StartScreen onContinue={() => setCurrentScreen("setup")} />
+          <StartScreen 
+            onContinue={() => setCurrentScreen("setup")}
+            onStartQuiz={handleStartQuizFromStart}
+          />
         )}
         
         {currentScreen === "setup" && (
